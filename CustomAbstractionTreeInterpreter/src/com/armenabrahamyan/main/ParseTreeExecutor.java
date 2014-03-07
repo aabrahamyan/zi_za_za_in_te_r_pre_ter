@@ -189,7 +189,7 @@ public class ParseTreeExecutor {
 				final Operator firstOperator = operators.get(token);
 				String secondToken = stack.isEmpty() ? null : stack.peek();
 				while (operators.containsKey(secondToken)
-						&& ((firstOperator.isLeftAssoc() && firstOperator
+						&& ((firstOperator.isLeftBinded() && firstOperator
 								.getPrecedence() <= operators.get(secondToken)
 								.getPrecedence()) || (firstOperator
 								.getPrecedence() < operators.get(secondToken)

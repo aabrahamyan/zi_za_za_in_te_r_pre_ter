@@ -14,7 +14,7 @@ public abstract class Operator {
 	private int precedence;
 	
 	// Notes whether it is left power binded or not
-	private boolean leftAssoc;
+	private boolean leftBinded;
 
 	/**
 	 * Create a new operator with priority and power binding
@@ -22,10 +22,10 @@ public abstract class Operator {
 	 * @param precedence
 	 * @param leftAssoc
 	 */
-	public Operator(final String operatorName, int precedence, boolean leftAssoc) {
+	public Operator(final String operatorName, int precedence, boolean leftBinded) {
 		this.operatorName = operatorName;
 		this.precedence = precedence;
-		this.leftAssoc = leftAssoc;
+		this.leftBinded = leftBinded;
 	}
 
 	public String getOperatorName() {
@@ -36,8 +36,8 @@ public abstract class Operator {
 		return precedence;
 	}
 
-	public boolean isLeftAssoc() {
-		return leftAssoc;
+	public boolean isLeftBinded() {
+		return leftBinded;
 	}
 
 	
