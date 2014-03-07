@@ -20,7 +20,7 @@ public abstract class Operator {
 	 * Create a new operator with priority and power binding
 	 * @param oper
 	 * @param precedence
-	 * @param leftAssoc
+	 * @param leftBinded
 	 */
 	public Operator(final String operatorName, int precedence, boolean leftBinded) {
 		this.operatorName = operatorName;
