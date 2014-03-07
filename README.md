@@ -4,6 +4,11 @@ zi_za_za_in_te_r_pre_ter
 Usage example:
 
 ParseTreeExecutor parseTreeExecutor = new ParseTreeExecutor("(2+3) * 4");
+
+
+System.out.println(parseTreeExecutor.execute());
+
+
 Output: 20
 
 ========================
