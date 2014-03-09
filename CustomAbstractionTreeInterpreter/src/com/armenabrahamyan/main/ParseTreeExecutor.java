@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 import com.armenabrahamyan.languagelexing.InterpreterLanguageLexing;
 import com.armenabrahamyan.main.abstractparsetree.beans.Operator;
@@ -38,12 +39,24 @@ public class ParseTreeExecutor {
 			public String execute(final Integer a, final Integer b) {
 				return String.valueOf(a + b);
 			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 
 		addSymbol(new Operator("-", 20, true) {
 			@Override
 			public String execute(final Integer a, final Integer b) {
 				return String.valueOf(b - a);
+			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 
@@ -52,12 +65,24 @@ public class ParseTreeExecutor {
 			public String execute(final Integer a, final Integer b) {
 				return String.valueOf(a * b);
 			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 
 		addSymbol(new Operator("/", 30, true) {
 			@Override
 			public String execute(final Integer a, final Integer b) {
 				return String.valueOf(b / a);
+			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 
@@ -66,12 +91,24 @@ public class ParseTreeExecutor {
 			public String execute(final Integer a, final Integer b) {
 				return String.valueOf(b % a);
 			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 
 		addSymbol(new Operator(">", 10, false) {
 			@Override
 			public String execute(final Integer a, final Integer b) {
 				return (b > a) ? String.valueOf(1) : String.valueOf(0);
+			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 
@@ -80,12 +117,24 @@ public class ParseTreeExecutor {
 			public String execute(final Integer a, final Integer b) {
 				return (b >= a) ? String.valueOf(1) : String.valueOf(0);
 			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 
 		addSymbol(new Operator("<", 10, false) {
 			@Override
 			public String execute(final Integer a, final Integer b) {
 				return (b < a) ? String.valueOf(1) : String.valueOf(0);
+			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 
@@ -94,12 +143,24 @@ public class ParseTreeExecutor {
 			public String execute(final Integer a, final Integer b) {
 				return (b <= a) ? String.valueOf(1) : String.valueOf(0);
 			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 
 		addSymbol(new Operator("==", 7, false) {
 			@Override
 			public String execute(final Integer a, final Integer b) {
 				return (a == b) ? String.valueOf(1) : String.valueOf(0);
+			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 
@@ -108,11 +169,17 @@ public class ParseTreeExecutor {
 			public String execute(final Integer a, final Integer b) {
 				return (a != b) ? String.valueOf(1) : String.valueOf(0);
 			}
+
+			@Override
+			public String execute(Integer a) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		});
 
-		addSymbol(new Operator("FACTORIAL", 7, false) {
+		addSymbol(new Operator("!", 7, false) {
 			@Override
-			public String execute(final Integer a, final Integer b) {
+			public String execute(final Integer a) {
 				if (a > 0) {
 					int result = 1;
 					for (int i = 1; i <= a; i++) {
@@ -123,6 +190,12 @@ public class ParseTreeExecutor {
 				}
 
 				return "Factorial must be calculated for unsigned number";
+			}
+
+			@Override
+			public String execute(Integer a, Integer b) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 	}
@@ -155,7 +228,7 @@ public class ParseTreeExecutor {
 		Stack<String> stack = new Stack<String>();
 
 		InterpreterLanguageLexing tokenizer = new InterpreterLanguageLexing(
-				expression, operators);
+				expression, operators);		
 
 		while (tokenizer.hasNext()) {
 			String token = tokenizer.next();
@@ -247,9 +320,17 @@ public class ParseTreeExecutor {
 		for (String token : toListString()) {
 			if (operators.containsKey(token)) {
 				final String leftVar = stack.pop();
-				final String rightVar = stack.pop();
-				stack.push(operators.get(token).execute(
+				String rightVar = null;
+				if(stack.size() > 0) {
+					rightVar = stack.pop();
+				}
+				
+				if(rightVar != null) {
+					stack.push(operators.get(token).execute(
 						Integer.parseInt(leftVar), Integer.parseInt(rightVar)));
+				} else {
+					stack.push(operators.get(token).execute(Integer.parseInt(leftVar)));
+				}
 			} else {
 				stack.push(new String(token));
 			}
